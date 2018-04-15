@@ -16,22 +16,24 @@
 
 enum MOTOR_DIRECTION
 {
-	FORWARD,
-	BACKWARD,
+	NORMAL_DIRECTION = 0, //default value
+	REVERSED_DIRECTION,
 };
 
-class Fuzzy_VNH5019_Single
+class Fuzzy_VNH5019_Motor
 {
 	public:
-		Fuzzy_VNH5019_Single(uint8_t INA_PIN, uint8_t INB_PIN, uint8_t PWM_PIN);  //Constructor with required pin selection.
+		Fuzzy_VNH5019_Motor(uint8_t INA_PIN, uint8_t INB_PIN, uint8_t PWM_PIN);  //Constructor with required pin selection.
 		void begin();
-		void setSpeed(uint8_t speed); //Speed range from 0 to 255, while 0 is stopped, 255 is full speed.
-		void setDirection(MOTOR_DIRECTION direction);
+		void setSpeed(int16_t speed); //Speed range from -255 to 255, while 0 is coast, +/- 255 is full speed.
+		void setDirection(MOTOR_DIRECTION direction); //
+		MOTOR_DIRECTION getDirection();
 	private:
 		uint8_t _INA;
 		uint8_t _INB;
 		uint8_t _PWM;
 		uint8_t _speed;
+		MOTOR_DIRECTION _motorDirection;
 };
 #endif
 
